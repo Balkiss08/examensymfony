@@ -1,0 +1,51 @@
+{% extends 'base.html.twig' %}
+{% block title%} Liste des Produits par prix{% endblock %}
+{% block body %}
+{{ form_start(form) }}
+<div class="form-row align-items-end" >
+<div class="col">
+ {{ form_row(form.minPrice) }}
+</div>
+<div class="col">
+ {{ form_row(form.maxPrice) }}
+</div>
+ <div class="col">
+ <div class="form-group">
+ <button type="submit" class="btn btn-success">Rechercher</button>
+ </div>
+</div>
+</div>
+{{ form_end(form) }}
+{% if produits %}
+ <table id="produits" class="table table-striped">
+ <thead>
+ <tr>
+ <th>Nom</th>
+ <th>Description</th>
+ <th>Prix</th>
+ <th>Image</th>
+ <th>Actions</th>
+ </tr>
+ </thead>
+ <tbody>
+ {% for produit in produits %}
+ <tr>
+ <td>{{ produit.nom }}</td>
+ <td>{{ produit.description }}</td>
+ <td>{{ produit.prix }}</td>
+ <td>{{ produit.image }}</td>
+ 
+ <td>
+ <a href="/produit/{{ produit.id }}" class="btn btn-dark">Détails</a>
+<a href="/produit/edit/{{ produit.id }}" class="btn btn-dark">Modifier</a>
+ <a href="/produit/delete/{{ produit.id }}" class="btn btn-danger"
+ onclick="return confirm('Etes-vous sûr de supprimer cet produit?');">Supprimer</a>
+ </td>
+ </tr>
+ {% endfor %}
+ </tbody>
+ </table>
+ {% else %}
+ <p>Aucun produits</p>
+ {% endif %}
+{% endblock %}
